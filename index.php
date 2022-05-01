@@ -1,80 +1,51 @@
+<?php 
 
-<?php ; 
-include ('config.php');
+/** 
+*  1 Connexion à la base de donnée  
+*  2 Recherche des livres en fonction des noms d'auteurs 
+*  3 Affichage des résultats 
+*
+* @author Nassim Jedai 
+* @version 0.1, 1 mai 2022  
+*/
 
+// Définition du Titre 
+$titre = 'BiblioWeb';
 
-// déclaration des varirables
+//Inclusion des dépendances
+include 'includes/header.php'; 
 
+//Inclusion des dépendances
+require 'config.php'; 
 
-if (!empty($_POST['submit'])) {
-    
-    if (!empty($_POST('nomAuteur'))) {
-
-    }
-
-
-} else  {
-    $message = "Veuillez entrer un nom d'auteur ! ";
-}
-
-
-
-include ('config.php');
-
-// Connexion au serveur Mysql 
-$bd = @mysqli_connect(HOSTNAME,USERNAME,PASSWORD,DATABASE) or die('Erreur de connexion');
+// Déclaration des varaibles 
+$keyword; 
 
 
-if($bd) {
 
-    // Sélectionner la base de donnée 
-    if (mysqli_select_db($bd, 'biblioweb')) { 
-
-        // préparer une requête  
-
-        $nomAuteur = mysqli_real_escape_string($bd, $title);
-
-        $query = "SELECT * FROM books WHERE title = '$title'";
-
-        
-
-        //Envoyer la requête   
-        $result = mysqli_query($bd, $query);
-
-        // Extraire les résultats 
-     $title = (mysqli_fetch_row($result));
-        
-      echo '<pre>';
-       var_dump($books);
-       '</pre>';
-       echo '</pre>';
-
-        mysqli_free_result($result);
-
-        mysqli_close($bd);
-
-
-    }
-
-    
-};
 ?>
 
-
-
-<?php include('header.php') ?>
-
 <body>
+
+<form action="" method="get">
+    <input type="text" name="keyword" placeholder="Nom de l'auteur">
+    <button name="Search"> Rechercher</button>
+
+</form>
     
 
-    <form name="searchBook" action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
-        <div>
-            <label>Nom d'auteur  :</label>
-            <input type="text" name="nomAuteur" placeholder="écrivez un nom d'auteur">
-        </div>
 
-        <button type="submit">Rechercher</button>
-    </form>
 
-    <p> <?= $message ?> </p>
-<?php include('footer.php') ?>
+
+
+
+
+</body>
+
+ 
+
+
+<?php 
+//Inclusion des dépendances
+include 'includes/footer.php'; 
+?>
