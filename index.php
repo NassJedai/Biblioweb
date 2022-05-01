@@ -21,6 +21,7 @@ require 'config.php';
 // Déclaration des varaibles 
 $keyword; 
 
+if(!empty($_GET['keyword']))
 
 
 ?>
@@ -30,7 +31,6 @@ $keyword;
 <form action="" method="get">
     <input type="text" name="keyword" placeholder="Nom de l'auteur">
     <button name="Search"> Rechercher</button>
-
 </form>
     
 
