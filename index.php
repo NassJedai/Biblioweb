@@ -20,67 +20,79 @@ require 'config.php';
 
 // Déclaration des varaibles 
 $keyword; 
-$message; 
+$message = ''; 
 $books = [];
+$Btsearch;
 
 // Si l'utilisateur à rentrer quelque chose 
-if(!empty($_GET['keyword'])) {
+// if (!empty($_GET['keyword'])) {
+//     $keyword = ($_GET['keyword']);
+// }
+
+// Si l'utilisateur a appuyé sur le boutton 
+if((isset($_GET['Btsearch'])) && (!empty($_GET['keyword'])) ) {
+    $Btsearch = ($_GET['Btsearch']);
     $keyword = ($_GET['keyword']);
-}
 
-
-// Connexion à la base de donnée 
-
-$db = mysqli_connect(HOSTNAME, USERNAME, PASSWORD); 
-
-if($db) {
-    // Sélection de la base de donnée 
-    if(mysqli_select_db($db, DATABASE)) {
-        // Préparation de la requete 
-        if(!empty($keyword)) {
-            $query = "SELECT * FROM books 
-            INNER JOIN authors on author_id = authors.id 
-            WHERE authors.lastname ='$keyword'";
-
-            //Envoie de la requete
-            $result = mysqli_query($db, $query); 
-            
-            if($result) {
-                // Extraction des résultats 
-                while ($book = mysqli_fetch_assoc($result) != null) {
-                    $books [] = $book;
+    if ($Btsearch) {
+        // Connexion à la base de donnée 
+        $db = mysqli_connect(HOSTNAME, USERNAME, PASSWORD); 
+    
+        if($db) {
+            // Sélection de la base de donnée 
+            if(@mysqli_select_db($db, DATABASE)) {
+                // Préparation de la requete 
+                if(!empty($keyword)) {
+                    $query = "SELECT * FROM books 
+                    INNER JOIN authors on author_id = authors.id 
+                    WHERE authors.lastname ='$keyword'";
+    
+                    //Envoie de la requete
+                    $result = mysqli_query($db, $query); 
+                    
+                    if($result) {
+                        // Extraction des résultats 
+                        while ($book = mysqli_fetch_assoc($result) != null) {
+                            $books [] = $book;
+                        }
+                        // Libération de la mémoire 
+                        mysqli_free_result($result);
+                         var_dump($books); 
+    
+                    } else {
+                        $message = 'Erreur de requête !';
+                    }
+    
+                } else {
+                    $message = 'Nom d\'auteur inconnu !';
                 }
-                // Libération de la mémoire 
-                mysqli_free_result($result);
-
+    
+                
             } else {
-                $message = 'Erreur de requête !';
-            }
-
+                $message = 'Erreur de sélection de la BD !';
+                }
+    
+                // Fermeture de la connexion 
+                mysqli_close($db);
+    
+            
+    
         } else {
-            $message = 'Nom d\'auteur inconnu !';
+            $message = 'Erreur de connexion de la BD !';
         }
-
-        
-    } else {
-        $message = 'Erreur de sélection de la BD !';
-        }
-
-} else {
-    $message = 'Erreur de connexion de la BD !';
+    }; 
 }
 
- //var_dump($books); 
-
+   
 
 
 ?>
 
 <body>
-<?= $message; ?>
-<form action="" method="get">
+<div><?= $message; ?></div>
+<form action="<?= $_SERVER['PHP_SELF']?>" method="get">
     <input type="text" name="keyword" placeholder="Nom de l'auteur">
-    <button name="Search"> Rechercher</button>
+    <input type="submit" name="Btsearch"></input>
 </form>
     
 
