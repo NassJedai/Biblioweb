@@ -97,7 +97,7 @@ if((isset($_GET['Btsearch'])) && (!empty($_GET['keyword'])) ) {
     
 
 
-
+<!-- // bug  -->
 
 
 
