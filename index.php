@@ -24,12 +24,9 @@ $message = '';
 $books = [];
 $Btsearch;
 
-// Si l'utilisateur à rentrer quelque chose 
-// if (!empty($_GET['keyword'])) {
-//     $keyword = ($_GET['keyword']);
-// }
 
-// Si l'utilisateur a appuyé sur le boutton 
+
+// Si l'utilisateur a appuyé sur le boutton ainsi qu'un nom d'auteur
 if((isset($_GET['Btsearch'])) && (!empty($_GET['keyword'])) ) {
     $Btsearch = ($_GET['Btsearch']);
     $keyword = ($_GET['keyword']);
@@ -54,10 +51,11 @@ if((isset($_GET['Btsearch'])) && (!empty($_GET['keyword'])) ) {
                         // Extraction des résultats 
                         while ($book = mysqli_fetch_assoc($result) != null) {
                             $books [] = $book;
+                            var_dump($book);
                         }
                         // Libération de la mémoire 
                         mysqli_free_result($result);
-                         var_dump($books); 
+                         
     
                     } else {
                         $message = 'Erreur de requête !';
@@ -94,19 +92,21 @@ if((isset($_GET['Btsearch'])) && (!empty($_GET['keyword'])) ) {
     <input type="text" name="keyword" placeholder="Nom de l'auteur">
     <input type="submit" name="Btsearch"></input>
 </form>
+
+
+<section>
+    <?php foreach ($books as $book) { ?>
+        <article>
+            <figure>
+                <img src="<?= $book['cover_ulr'] ?>" alt="<?= $book['title'] ?>" width="100">
+                <figcaption><?= $book['title'] ?></figcaption>
+            </figure>
+            <p><?= $book['description'] ?></p>
+        </article>
+        <?php } ?>
+</section>
     
-
-
-<!-- // bug  -->
-
-
-
-
 </body>
-
- 
-
-
 <?php 
 //Inclusion du footer
 include 'includes/footer.php'; 
