@@ -1,9 +1,10 @@
 <?php 
 
 /** 
-*  1 Connexion à la base de donnée  
-*  2 Recherche des livres en fonction des noms d'auteurs 
-*  3 Affichage des résultats 
+*  1. Connexion à la base de donnée  
+*  2. Recherche des livres en fonction des noms d'auteurs 
+*  3. Affichage des résultats 
+*  4. Création d'app qui permet de modifier et de supprimer
 *
 * @author Nassim Jedai 
 * @version 0.1, 1 mai 2022  
@@ -97,17 +98,20 @@ if((isset($_GET['Btsearch'])) && (!empty($_GET['keyword'])) ) {
 <section>
     <?php foreach ($books as $book) { ?>
         <article>
+            
             <figure>
                 <img src="<?= $book['cover_ulr'] ?>" alt="<?= $book['title'] ?>" width="100">
                 <figcaption><?= $book['title'] ?></figcaption>
             </figure>
+
             <p><?= $book['description'] ?></p>
             <p><a href="edit.php?ref=<?= $book['ref'] ?>">Modifier</a></p>
+
             <form action="delete.php" method="post">
                 <input name="ref" value="<?= $book['ref'] ?>">
                 <button name="btDelete">Supprimer</button>
-
             </form>
+
         </article>
         <?php } ?>
 </section>
