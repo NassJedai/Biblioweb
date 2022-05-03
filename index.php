@@ -51,7 +51,7 @@ if((isset($_GET['Btsearch'])) && (!empty($_GET['keyword'])) ) {
                         // Extraction des résultats 
                         while ($book = mysqli_fetch_assoc($result) != null) {
                             $books [] = $book;
-                            var_dump($book);
+                           // var_dump($book);
                         }
                         // Libération de la mémoire 
                         mysqli_free_result($result);
@@ -102,6 +102,12 @@ if((isset($_GET['Btsearch'])) && (!empty($_GET['keyword'])) ) {
                 <figcaption><?= $book['title'] ?></figcaption>
             </figure>
             <p><?= $book['description'] ?></p>
+            <p><a href="edit.php?ref=<?= $book['ref'] ?>">Modifier</a></p>
+            <form action="delete.php" method="post">
+                <input name="ref" value="<?= $book['ref'] ?>">
+                <button name="btDelete">Supprimer</button>
+
+            </form>
         </article>
         <?php } ?>
 </section>
