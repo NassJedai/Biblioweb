@@ -29,11 +29,7 @@ if (isset($_POST['btDelete'])) {
                 var_dump($result);
                     
                 if($result) {
-                    if(mysqli_affected_rows($db)>0) {
-                        $_SESSION['message'] =  "Modification réussie.";
-                    } else {
-                        $_SESSION['message'] =  "Aucune suppression.";
-                    }
+                 
                     // Extraction des résultats 
 
                     // var_dump($book);
